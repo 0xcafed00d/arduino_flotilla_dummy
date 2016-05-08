@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+libraries/*
+
+#platformio files
+.pioenvs
+.sconsign.dblite
+.idea
+.travis.yml
+.vscode

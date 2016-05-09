@@ -4,11 +4,41 @@
 
 const size_t BUFFER_SZ = 128;
 char inputBuffer[BUFFER_SZ];
+char elementIdx[32];
+char elementCount;
+
 size_t bufferPos = 0;
 
+bool isDelim (char c) {
+	return c == ',' || c == ' ';
+}
+
+void parseBuffer () {
+	elementCount = 0;
+
+	if (bufferPos > 0 && !isDelim(inputBuffer[0])) {
+		elementIdx[elementCount++] = 0;
+		for (size_t n = 1; n < bufferPos; n++){
+			if (isDelim(inputBuffer[n])) {
+				inputBuffer[n] = 0;
+			} else {
+				if (inputBuffer[n-1] == 0) {
+					elementIdx[elementCount++] = n;
+				}
+			}
+		}
+	}
+}
+
+
 void handleBuffer() {
-	inputBuffer[bufferPos] = 0;
-	Serial.println(inputBuffer);
+	parseBuffer();
+
+	Serial.println ((int)elementCount);
+	for (int n = 0; n < elementCount; n++){
+		Serial.println(inputBuffer + elementIdx[n]);
+	}
+
 	bufferPos = 0;
 }
 

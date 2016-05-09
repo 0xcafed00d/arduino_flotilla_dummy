@@ -1,9 +1,3 @@
-/**
- * Blink
- *
- * Turns on an LED on for one second,
- * then off for one second, repeatedly.
- */
 #include "Arduino.h"
 
 #define LED 2
@@ -33,11 +27,14 @@ void loop() {
 		digitalWrite(LED, (int) toggle);
 		toggle = !toggle;
 		int c = Serial.read();
-		if (c == '\r') {
-			handleBuffer();
-		}
-		else {
-			inputBuffer[bufferPos++] = (char) c;
+		switch (c) {
+			case '\r':
+				handleBuffer();
+				break;
+			case '\n':
+				break;
+			default:
+				inputBuffer[bufferPos++] = (char) c;
 		}
 	}
 }

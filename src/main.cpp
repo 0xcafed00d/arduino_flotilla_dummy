@@ -3,17 +3,17 @@
 #define LED 2
 
 const size_t BUFFER_SZ = 128;
-char inputBuffer[BUFFER_SZ];
-char* elementPtrs[32];
-
+char inputBuffer[BUFFER_SZ + 1];
 size_t bufferPos = 0;
+char *elementPtrs[32];
+
 
 bool isDelim(char c) {
     return c == ',' || c == ' ';
 }
 
 void parseBuffer() {
-    char** eptrs = elementPtrs;
+    char **eptrs = elementPtrs;
     *eptrs = NULL;
 
     if (bufferPos > 0 && !isDelim(inputBuffer[0])) {
@@ -23,7 +23,7 @@ void parseBuffer() {
                 inputBuffer[n] = 0;
             } else {
                 if (inputBuffer[n - 1] == 0) {
-                    *eptrs++ = inputBuffer+n;
+                    *eptrs++ = inputBuffer + n;
                 }
             }
         }
@@ -35,8 +35,8 @@ void handleBuffer() {
     inputBuffer[bufferPos] = 0;
     parseBuffer();
 
-    for (int n = 0; elementPtrs[n]; n++) {
-        Serial.println(elementPtrs[n]);
+    for (char **eptrs = elementPtrs; *eptrs; eptrs++) {
+        Serial.println(*eptrs);
     }
 
     bufferPos = 0;
@@ -47,23 +47,24 @@ void setup() {
     pinMode(LED, OUTPUT);
 }
 
-bool toggle = false;
-
 void loop() {
 
-    int avail = Serial.available();
-    for (int n = 0; n < avail; n++) {
-        digitalWrite(LED, (int) toggle);
-        toggle = !toggle;
-        int c = Serial.read();
-        switch (c) {
-            case '\r':
-                handleBuffer();
-                break;
-            case '\n':
-                break;
-            default:
-                inputBuffer[bufferPos++] = (char) c;
+    if (Serial) {
+        digitalWrite(LED, 1);
+        int avail = Serial.available();
+        for (int n = 0; n < avail; n++) {
+            int c = Serial.read();
+            switch (c) {
+                case '\r':
+                    handleBuffer();
+                    break;
+                case '\n':
+                    break;
+                default:
+                    inputBuffer[bufferPos++] = (char) c;
+            }
         }
+    } else {
+        digitalWrite(LED, 0);
     }
 }

@@ -8,11 +8,25 @@
 int intParams[16];
 
 void handleVersion(){
-    Serial.print("# This is the Version text\r\n");
+    Serial.print("# Flotilla ready to set sail..\r\n");
+    Serial.print("# Version: 1.12\r\n");
+    Serial.print("# Serial: 0111111111111111111111\r\n");
+    Serial.print("# User: Unnamed\r\n");
+    Serial.print("# Dock: Unnamed\r\n");
 }
 
 void handleDebug(){
-    Serial.print("# This is the Debug text\r\n");
+    Serial.print("# SRAM: 1337 bytes\r\n");
+    Serial.print("# Loop: 0ms (0us) 0fps\r\n");
+    Serial.print("# Channels:\r\n");
+    Serial.print("# - 0\r\n");
+    Serial.print("# - 1\r\n");
+    Serial.print("# - 2\r\n");
+    Serial.print("# - 3\r\n");
+    Serial.print("# - 4\r\n");
+    Serial.print("# - 5\r\n");
+    Serial.print("# - 6\r\n");
+    Serial.print("# - 7\r\n");
 }
 
 void handleEnquire(){

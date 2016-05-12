@@ -1,5 +1,7 @@
 #include "Arduino.h"
 
+#include "handlecommand.h"
+
 #define LED 2
 
 const size_t BUFFER_SZ = 128;
@@ -34,10 +36,12 @@ void parseBuffer() {
 void handleBuffer() {
     inputBuffer[bufferPos] = 0;
     parseBuffer();
+    handleCommand(elementPtrs);
 
+    /*
     for (char **eptrs = elementPtrs; *eptrs; eptrs++) {
         Serial.println(*eptrs);
-    }
+    }*/
 
     bufferPos = 0;
 }
@@ -49,22 +53,18 @@ void setup() {
 
 void loop() {
 
-    if (Serial) {
-        digitalWrite(LED, 1);
-        int avail = Serial.available();
-        for (int n = 0; n < avail; n++) {
-            int c = Serial.read();
-            switch (c) {
-                case '\r':
-                    handleBuffer();
-                    break;
-                case '\n':
-                    break;
-                default:
-                    inputBuffer[bufferPos++] = (char) c;
-            }
+    digitalWrite(LED, 1);
+    int avail = Serial.available();
+    for (int n = 0; n < avail; n++) {
+        int c = Serial.read();
+        switch (c) {
+            case '\r':
+                handleBuffer();
+                break;
+            case '\n':
+                break;
+            default:
+                inputBuffer[bufferPos++] = (char) c;
         }
-    } else {
-        digitalWrite(LED, 0);
     }
 }

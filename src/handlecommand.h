@@ -1,0 +1,10 @@
+//
+// Created by lmw on 12/05/16.
+//
+
+#ifndef ARDUINO_FLOTILLA_DUMMY_HANDLECOMMAND_H
+#define ARDUINO_FLOTILLA_DUMMY_HANDLECOMMAND_H
+
+void handleCommand(char** cmd);
+
+#endif //ARDUINO_FLOTILLA_DUMMY_HANDLECOMMAND_H

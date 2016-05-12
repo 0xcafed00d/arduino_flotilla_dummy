@@ -51,4 +51,4 @@ add_custom_target(
 add_executable(arduino_flotilla_dummy
     src/main.cpp
         src/handlecommand.cpp
-        src/handlecommand.h)
+        src/handlecommand.h src/handleupdate.cpp src/handleupdate.h)

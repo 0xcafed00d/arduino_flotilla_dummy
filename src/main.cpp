@@ -1,6 +1,7 @@
 #include "Arduino.h"
 
 #include "handlecommand.h"
+#include "handleupdate.h"
 
 #define LED 2
 
@@ -53,7 +54,6 @@ void setup() {
 
 void loop() {
 
-    digitalWrite(LED, 1);
     int avail = Serial.available();
     for (int n = 0; n < avail; n++) {
         int c = Serial.read();
@@ -67,4 +67,6 @@ void loop() {
                 inputBuffer[bufferPos++] = (char) c;
         }
     }
+
+    handleUpdate();
 }

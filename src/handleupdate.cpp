@@ -5,5 +5,4 @@
 #include "handleupdate.h"
 
 void handleUpdate() {
-
 }

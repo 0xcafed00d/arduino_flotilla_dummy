@@ -3,14 +3,16 @@ project(arduino_flotilla_dummy)
 
 include(CMakeListsPrivate.txt)
 
-add_definitions(-DF_CPU=80000000L)
-add_definitions(-D__ets__)
-add_definitions(-DICACHE_FLASH)
-add_definitions(-DESP8266)
-add_definitions(-DARDUINO_ARCH_ESP8266)
-add_definitions(-DARDUINO_ESP8266_NODEMCU)
-add_definitions(-DARDUINO=20200)
+add_definitions(-DF_CPU=8000000L)
+add_definitions(-DARDUINO_ARCH_AVR)
+add_definitions(-DAVR_PROMICRO8)
+add_definitions(-DUSB_VID=0x1B4F)
+add_definitions(-DUSB_PID=0x9203)
+add_definitions(-DUSB_PRODUCT="SparkFun Pro Micro")
+add_definitions(-DUSB_MANUFACTURER="SparkFun")
+add_definitions(-DARDUINO=10608)
 add_definitions(-DPLATFORMIO=020901)
+add_definitions(-D__AVR_ATmega32U4__)
 
 add_custom_target(
     PLATFORMIO_BUILD ALL
@@ -50,5 +52,6 @@ add_custom_target(
 
 add_executable(arduino_flotilla_dummy
     src/main.cpp
-        src/handlecommand.cpp
-        src/handlecommand.h src/handleupdate.cpp src/handleupdate.h)
+    src/handleupdate.cpp
+    src/handlecommand.cpp
+)

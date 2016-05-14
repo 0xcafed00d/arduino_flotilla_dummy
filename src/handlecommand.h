@@ -7,4 +7,4 @@
 
 void handleCommand(char** cmd);
 
-#endif //ARDUINO_FLOTILLA_DUMMY_HANDLECOMMAND_H
+#endif  // ARDUINO_FLOTILLA_DUMMY_HANDLECOMMAND_H

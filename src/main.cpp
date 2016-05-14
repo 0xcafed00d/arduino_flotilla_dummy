@@ -2,8 +2,11 @@
 
 #include "handlecommand.h"
 #include "handleupdate.h"
+#include "pushbutton.h"
 
-#define LED 2
+#define LED 17
+
+PushButton<21> button1;
 
 const size_t BUFFER_SZ = 128;
 char inputBuffer[BUFFER_SZ + 1];
@@ -46,25 +49,39 @@ void handleBuffer() {
 	bufferPos = 0;
 }
 
+bool toggle = false;
+
 void setup() {
 	Serial.begin(115200);
 	pinMode(LED, OUTPUT);
+	toggle = false;
+	pinMode(21, INPUT_PULLUP);
 }
 
 void loop() {
-	int avail = Serial.available();
-	for (int n = 0; n < avail; n++) {
-		int c = Serial.read();
-		switch (c) {
-			case '\r':
-				handleBuffer();
-				break;
-			case '\n':
-				break;
-			default:
-				inputBuffer[bufferPos++] = (char)c;
+	if (Serial) {
+		int avail = Serial.available();
+		for (int n = 0; n < avail; n++) {
+			int c = Serial.read();
+			switch (c) {
+				case '\r':
+					handleBuffer();
+					break;
+				case '\n':
+					break;
+				default:
+					inputBuffer[bufferPos++] = (char)c;
+			}
 		}
+
+		handleUpdate();
 	}
 
-	handleUpdate();
+	if (button1.Pressed()) {
+		toggle = !toggle;
+	}
+
+	digitalWrite(LED, toggle);
+
+	// delay(100);
 }

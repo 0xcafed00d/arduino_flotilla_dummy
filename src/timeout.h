@@ -18,6 +18,6 @@ class TimeOut {
 	bool hasTimedOut() const {
 		return millis() > end;
 	}
-}
+};
 
 #endif  // ARDUINO_FLOTILLA_DUMMY_TIMEOUT_H

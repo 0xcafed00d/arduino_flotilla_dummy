@@ -54,4 +54,4 @@ add_executable(arduino_flotilla_dummy
     src/main.cpp
     src/handleupdate.cpp
     src/handlecommand.cpp
-        src/pushbutton.h src/led.h)
+        src/pushbutton.h src/led.h src/pushbutton.cpp)

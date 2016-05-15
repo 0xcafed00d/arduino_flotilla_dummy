@@ -10,15 +10,8 @@
 
 class PushButton {
   public:
-	PushButton() {
-	}
 
-	void Setup(uint8_t pin) {
-		pinMode(pin, INPUT_PULLUP);
-		m_last = false;
-		m_current = false;
-		m_pin = pin;
-	}
+	void Setup(uint8_t pin);
 
 	bool Pressed() {
 		return StateChanged() && m_current;
@@ -44,18 +37,7 @@ class PushButton {
 	bool m_current;
 	TimeOut m_debounce;
 
-	bool StateChanged() {
-		bool changed = false;
-		if (m_debounce.hasTimedOut()) {
-			m_current = Raw();
-			if (m_current != m_last) {
-				changed = true;
-				m_last = m_current;
-				m_debounce = TimeOut(50);
-			}
-		}
-		return changed;
-	}
+	bool StateChanged();
 };
 
 #endif  // ARDUINO_FLOTILLA_DUMMY_PUSHBUTTON_H

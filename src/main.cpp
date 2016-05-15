@@ -8,6 +8,9 @@
 LED redLED;
 LED rxLED;
 PushButton button1;
+PushButton button2;
+PushButton button3;
+PushButton button4;
 
 const size_t BUFFER_SZ = 128;
 char inputBuffer[BUFFER_SZ + 1];
@@ -51,11 +54,15 @@ void handleBuffer() {
 }
 
 bool toggle = false;
+int brightness = 0;
 
 void setup() {
 	Serial.begin(115200);
 	button1.Setup(21);
-	redLED.Setup(3);
+	button2.Setup(20);
+	button3.Setup(19);
+	button4.Setup(18);
+	redLED.Setup(10);
 	rxLED.Setup(17, false);
 }
 
@@ -82,10 +89,19 @@ void loop() {
 
 	if (button1.Pressed()) {
 		toggle = !toggle;
+		redLED.Set(toggle);
+		rxLED.Set(toggle);
 	}
 
-	redLED.Set(toggle);
-	rxLED.Set(toggle);
+	if (button2.Pressed()) {
+		brightness += 10;
+		redLED.Brightness(brightness);
+	}
+
+	if (button3.Pressed()) {
+		brightness -= 10;
+		redLED.Brightness(brightness);
+	}
 
 	// delay(100);
 }

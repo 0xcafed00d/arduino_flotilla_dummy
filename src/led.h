@@ -36,6 +36,10 @@ class LED {
 			Off();
 	}
 
+	void Brightness(int val) {
+		analogWrite(m_pin, constrain(val, 0, 255));
+	}
+
   private:
 	uint8_t m_pin;
 	bool m_activeHigh;

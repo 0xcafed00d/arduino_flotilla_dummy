@@ -8,11 +8,16 @@
 #include "Arduino.h"
 #include "timeout.h"
 
-template <uint8_t pin>
 class PushButton {
   public:
-	PushButton() : m_last(false), m_current(false) {
+	PushButton() {
+	}
+
+	void Setup(uint8_t pin) {
 		pinMode(pin, INPUT_PULLUP);
+		m_last = false;
+		m_current = false;
+		m_pin = pin;
 	}
 
 	bool Pressed() {
@@ -30,10 +35,11 @@ class PushButton {
 
 	// return true for pressed & false for not pressed
 	bool Raw() {
-		return digitalRead(pin) == 0;
+		return digitalRead(m_pin) == 0;
 	}
 
   private:
+	uint8_t m_pin;
 	bool m_last;
 	bool m_current;
 	TimeOut m_debounce;

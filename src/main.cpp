@@ -3,10 +3,11 @@
 #include "handlecommand.h"
 #include "handleupdate.h"
 #include "pushbutton.h"
+#include "led.h"
 
-#define LED 17
-
-PushButton<21> button1;
+LED redLED;
+LED rxLED;
+PushButton button1;
 
 const size_t BUFFER_SZ = 128;
 char inputBuffer[BUFFER_SZ + 1];
@@ -53,12 +54,14 @@ bool toggle = false;
 
 void setup() {
 	Serial.begin(115200);
-	pinMode(LED, OUTPUT);
-	toggle = false;
-	pinMode(21, INPUT_PULLUP);
+	button1.Setup(21);
+	redLED.Setup(3);
+	rxLED.Setup(17, false);
 }
 
 void loop() {
+	TXLED0;
+
 	if (Serial) {
 		int avail = Serial.available();
 		for (int n = 0; n < avail; n++) {
@@ -81,7 +84,8 @@ void loop() {
 		toggle = !toggle;
 	}
 
-	digitalWrite(LED, toggle);
+	redLED.Set(toggle);
+	rxLED.Set(toggle);
 
 	// delay(100);
 }

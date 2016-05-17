@@ -10,7 +10,6 @@
 
 class PushButton {
   public:
-
 	void Setup(uint8_t pin);
 
 	bool Pressed() {

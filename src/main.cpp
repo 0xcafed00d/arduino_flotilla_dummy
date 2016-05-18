@@ -2,15 +2,6 @@
 
 #include "handlecommand.h"
 #include "handleupdate.h"
-#include "pushbutton.h"
-#include "led.h"
-
-LED redLED;
-LED rxLED;
-PushButton button1;
-PushButton button2;
-PushButton button3;
-PushButton button4;
 
 const size_t BUFFER_SZ = 128;
 char inputBuffer[BUFFER_SZ + 1];
@@ -44,23 +35,11 @@ void handleBuffer() {
 	inputBuffer[bufferPos] = 0;
 	parseBuffer();
 	handleCommand(elementPtrs);
-
-	/*
-	for (char **eptrs = elementPtrs; *eptrs; eptrs++) {
-	    Serial.println(*eptrs);
-	}*/
-
 	bufferPos = 0;
 }
 
-bool toggle = false;
-int brightness = 0;
-
 void setup() {
 	Serial.begin(115200);
-
-	redLED.Setup(10);
-	rxLED.Setup(17, false);
 }
 
 void loop() {
@@ -83,22 +62,4 @@ void loop() {
 
 		handleUpdate();
 	}
-
-	if (button1.Pressed()) {
-		toggle = !toggle;
-		redLED.Set(toggle);
-		rxLED.Set(toggle);
-	}
-
-	if (button2.Pressed()) {
-		brightness += 10;
-		redLED.Brightness(brightness);
-	}
-
-	if (button3.Pressed()) {
-		brightness -= 10;
-		redLED.Brightness(brightness);
-	}
-
-	// delay(100);
 }

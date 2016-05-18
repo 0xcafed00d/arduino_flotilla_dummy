@@ -6,19 +6,19 @@
 #define ARDUINO_FLOTILLA_DUMMY_MODULETOUCH_H
 
 #include "module.h"
+#include "pushbutton.h"
 
 class ModuleTouch : public Module {
+  private:
+	PushButton m_buttons[4];
+	bool m_prevStates[4];
+
   public:
-	virtual int Channel() {
-		return 0;
-	}
+	void Init(int chan);
 
-	virtual void OnEnquire(Stream* stream) {
-	}
+	virtual void OnEnquire(Stream* stream);
 
-	virtual void Update(Stream* stream) {
-		Module::Update(stream);
-	}
+	virtual void Update(Stream* stream);
 };
 
 #endif  // ARDUINO_FLOTILLA_DUMMY_MODULETOUCH_H

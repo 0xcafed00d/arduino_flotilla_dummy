@@ -58,10 +58,7 @@ int brightness = 0;
 
 void setup() {
 	Serial.begin(115200);
-	button1.Setup(21);
-	button2.Setup(20);
-	button3.Setup(19);
-	button4.Setup(18);
+
 	redLED.Setup(10);
 	rxLED.Setup(17, false);
 }

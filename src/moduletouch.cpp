@@ -5,6 +5,8 @@
 #include "moduletouch.h"
 
 void ModuleTouch::Init(int chan) {
+	SetChannel(chan);
+
 	m_buttons[0].Setup(21);
 	m_buttons[1].Setup(20);
 	m_buttons[2].Setup(19);

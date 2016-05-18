@@ -43,8 +43,6 @@ void setup() {
 }
 
 void loop() {
-	TXLED0;
-
 	if (Serial) {
 		int avail = Serial.available();
 		for (int n = 0; n < avail; n++) {

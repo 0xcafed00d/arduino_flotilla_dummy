@@ -2,15 +2,18 @@
 #define ARDUINO_FLOTILLA_DUMMY_MODULERAINBOW_H
 
 #include "module.h"
+#include "led.h"
 
 class ModuleRainbow : public Module {
   private:
-  public:
-	virtual void Set(int* params, int paramc) {
-	}
+	LED m_leds[5];
 
-	virtual void OnEnquire(Stream* stream) {
-	}
+  public:
+	void Init(int chan);
+
+	virtual void Set(int* params, int paramc);
+
+	virtual void OnEnquire(Stream* stream);
 };
 
 #endif  // ARDUINO_FLOTILLA_DUMMY_MODULERAINBOW_H

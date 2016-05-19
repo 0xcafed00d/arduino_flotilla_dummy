@@ -16,7 +16,7 @@ void ModuleTouch::Init(int chan) {
 void ModuleTouch::OnEnquire(Stream* stream) {
 	stream->print("c ");
 	stream->print(Channel());
-	stream->print("/touch\r");
+	stream->print("/touch\r\n");
 }
 
 void ModuleTouch::Update(Stream* stream) {
@@ -31,12 +31,13 @@ void ModuleTouch::Update(Stream* stream) {
 	}
 
 	if (send) {
-		stream->print("c ");
+		stream->print("u ");
 		stream->print(Channel());
-		stream->print(" ");
-		stream->print(m_prevStates[0] ? "0," : "1,");
-		stream->print(m_prevStates[1] ? "0," : "1,");
-		stream->print(m_prevStates[2] ? "0," : "1,");
-		stream->print(m_prevStates[3] ? "0" : "1");
+		stream->print("/touch ");
+		stream->print(m_prevStates[0] ? "1," : "0,");
+		stream->print(m_prevStates[1] ? "1," : "0,");
+		stream->print(m_prevStates[2] ? "1," : "0,");
+		stream->print(m_prevStates[3] ? "1" : "0");
+		stream->print("\r\n");
 	}
 }

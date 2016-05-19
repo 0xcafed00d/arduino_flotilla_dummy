@@ -13,19 +13,19 @@ void ModuleRainbow::Init(int chan) {
 void ModuleRainbow::OnEnquire(Stream* stream) {
 	stream->print("c ");
 	stream->print(Channel());
-	stream->print("/rainbow\r");
+	stream->print("/rainbow\r\n");
 }
 
 void ModuleRainbow::Set(int* params, int paramc) {
 	if (paramc == 15) {
-        for (int n = 0; n < 5; n++) {
-            int val = (params[n*3] + params[n*3+1] + params[n*3+2]) / 3;
-            m_leds[n].Brightness(val);
-        }
+		for (int n = 0; n < 5; n++) {
+			int val = (params[n * 3] + params[n * 3 + 1] + params[n * 3 + 2]) / 3;
+			m_leds[n].Brightness(val);
+		}
 	} else if (paramc == 3) {
-        int val = (params[0] + params[1] + params[2]) / 3;
-        for (int n = 0; n < 5; n++) {
-            m_leds[n].Brightness(val);
-        }
+		int val = (params[0] + params[1] + params[2]) / 3;
+		for (int n = 0; n < 5; n++) {
+			m_leds[n].Brightness(val);
+		}
 	}
 }

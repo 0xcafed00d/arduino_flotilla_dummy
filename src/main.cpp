@@ -19,7 +19,8 @@ void setup() {
 
 void loop() {
 	if (Serial) {
-		dock.ProcessInput(&Serial);
 		dock.Update(&Serial);
+		dock.ProcessInput(&Serial);
 	}
+	delay(100);
 }

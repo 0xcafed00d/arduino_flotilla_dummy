@@ -1,7 +1,5 @@
 #include "dock.h"
 
-#include "handlecommand.h"
-
 bool isDelim(char c) {
 	return c == ',' || c == ' ';
 }

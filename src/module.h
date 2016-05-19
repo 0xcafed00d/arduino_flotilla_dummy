@@ -17,6 +17,8 @@ class Module {
 		return m_channel;
 	}
 
+	virtual const char* Name() = 0;
+
 	virtual void OnEnquire(Stream* stream) = 0;
 
 	virtual void Set(int* params, int paramc) {

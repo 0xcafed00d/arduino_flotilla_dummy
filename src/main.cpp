@@ -10,6 +10,10 @@ ModuleRainbow modRainbow;
 void setup() {
 	Serial.begin(115200);
 
+	while (!Serial) {
+		;  // wait for serial port to connect. Needed for native USB
+	}
+
 	modTouch.Init(1);
 	modRainbow.Init(2);
 
@@ -18,9 +22,7 @@ void setup() {
 }
 
 void loop() {
-	if (Serial) {
-		dock.Update(&Serial);
-		dock.ProcessInput(&Serial);
-	}
-	delay(100);
+	dock.Update(&Serial);
+	dock.ProcessInput(&Serial);
+	delay(10);
 }

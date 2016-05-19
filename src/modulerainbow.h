@@ -11,6 +11,10 @@ class ModuleRainbow : public Module {
   public:
 	void Init(int chan);
 
+	const char* Name() {
+		return "rainbow";
+	}
+
 	virtual void Set(int* params, int paramc);
 
 	virtual void OnEnquire(Stream* stream);

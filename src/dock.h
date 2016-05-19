@@ -14,8 +14,15 @@ class Dock {
 	char* m_tokenPtrs[32];
 	Module* m_channels[NUM_MODULES];
 
-	void handleBuffer();
+	void handleBuffer(Stream* stream);
 	void parseBuffer();
+	int convertParams(char** params, int* intParams);
+
+	void handleCommand(char** cmd, Stream* stream);
+	void handleVersion(Stream* stream);
+	void handleDebug(Stream* stream);
+	void handleEnquire(Stream* stream);
+	void handleSet(char** params, Stream* stream);
 
   public:
 	Dock();

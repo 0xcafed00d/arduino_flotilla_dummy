@@ -10,6 +10,45 @@ Dock::Dock() : m_bufferPos(0) {
 	memset(m_channels, 0, sizeof(m_channels));
 }
 
+int Dock::convertParams(char** params, int* intParams) {
+	int pcount = 0;
+	while (*params) {
+		intParams[pcount++] = atoi(*params++);
+	}
+	return pcount;
+}
+
+void Dock::handleSet(char** params, Stream* stream) {
+	int intParams[16];
+
+	int pcount = convertParams(params, intParams);
+	if (pcount > 1) {
+		Module* m = m_channels[intParams[0]];
+		if (m) {
+			m->Set(intParams + 1, pcount - 1);
+		}
+	}
+}
+
+void Dock::handleCommand(char** cmd, Stream* stream) {
+	if (*cmd) {
+		switch (*cmd[0]) {
+			case 'v':
+				handleVersion(stream);
+				break;
+			case 'd':
+				handleDebug(stream);
+				break;
+			case 'e':
+				handleEnquire(stream);
+				break;
+			case 's':
+				handleSet(cmd + 1, stream);
+				break;
+		}
+	}
+}
+
 void Dock::parseBuffer() {
 	char** toks = m_tokenPtrs;
 	*toks = NULL;
@@ -29,10 +68,41 @@ void Dock::parseBuffer() {
 	*toks = NULL;
 }
 
-void Dock::handleBuffer() {
+void Dock::handleVersion(Stream* stream) {
+	stream->print("# Flotilla ready to set sail..\r\n");
+	stream->print("# Version: 1.12\r\n");
+	stream->print("# Serial: 0111111111111111111111\r\n");
+	stream->print("# User: Unnamed\r\n");
+	stream->print("# Dock: Unnamed\r\n");
+}
+
+void Dock::handleDebug(Stream* stream) {
+	stream->print("# SRAM: 1337 bytes\r\n");
+	stream->print("# Loop: 0ms (0us) 0fps\r\n");
+	stream->print("# Channels:\r\n");
+	for (size_t n = 0; n < NUM_MODULES; n++) {
+		stream->print("# - ");
+		stream->print(n);
+		if (m_channels[n] != NULL) {
+			stream->print("/");
+			stream->print(m_channels[n]->Name());
+		}
+		stream->print("\r\n");
+	}
+}
+
+void Dock::handleEnquire(Stream* stream) {
+	for (size_t n = 0; n < NUM_MODULES; n++) {
+		if (m_channels[n] != NULL) {
+			m_channels[n]->OnEnquire(stream);
+		}
+	}
+}
+
+void Dock::handleBuffer(Stream* stream) {
 	m_inputBuffer[m_bufferPos] = 0;
 	parseBuffer();
-	handleCommand(m_tokenPtrs);
+	handleCommand(m_tokenPtrs, stream);
 	m_bufferPos = 0;
 }
 
@@ -48,7 +118,7 @@ void Dock::ProcessInput(Stream* stream) {
 		int c = stream->read();
 		switch (c) {
 			case '\r':
-				handleBuffer();
+				handleBuffer(stream);
 				break;
 			case '\n':
 				break;

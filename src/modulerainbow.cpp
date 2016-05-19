@@ -13,7 +13,9 @@ void ModuleRainbow::Init(int chan) {
 void ModuleRainbow::OnEnquire(Stream* stream) {
 	stream->print("c ");
 	stream->print(Channel());
-	stream->print("/rainbow\r\n");
+	stream->print("/");
+	stream->print(Name());
+	stream->print("\r\n");
 }
 
 void ModuleRainbow::Set(int* params, int paramc) {

@@ -16,6 +16,10 @@ class ModuleTouch : public Module {
   public:
 	void Init(int chan);
 
+	const char* Name() {
+		return "touch";
+	}
+
 	virtual void OnEnquire(Stream* stream);
 
 	virtual void Update(Stream* stream);

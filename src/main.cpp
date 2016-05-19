@@ -9,12 +9,17 @@ ModuleRainbow modRainbow;
 
 void setup() {
 	Serial.begin(115200);
+
 	modTouch.Init(1);
 	modRainbow.Init(2);
+
+	dock.AddModule(&modTouch);
+	dock.AddModule(&modRainbow);
 }
 
 void loop() {
 	if (Serial) {
 		dock.ProcessInput(&Serial);
+		dock.Update(&Serial);
 	}
 }

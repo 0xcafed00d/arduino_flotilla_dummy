@@ -1,7 +1,3 @@
-//
-// Created by lmw on 12/05/16.
-//
-
 #include "Arduino.h"
 #include "handlecommand.h"
 

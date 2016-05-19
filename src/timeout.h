@@ -1,7 +1,3 @@
-//
-// Created by lmw on 14/05/16.
-//
-
 #include "Arduino.h"
 
 #ifndef ARDUINO_FLOTILLA_DUMMY_TIMEOUT_H

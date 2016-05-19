@@ -1,7 +1,3 @@
-//
-// Created by lmw on 14/05/16.
-//
-
 #ifndef ARDUINO_FLOTILLA_DUMMY_PUSHBUTTON_H
 #define ARDUINO_FLOTILLA_DUMMY_PUSHBUTTON_H
 

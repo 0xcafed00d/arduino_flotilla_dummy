@@ -8,6 +8,9 @@ void ModuleRainbow::Init(int chan) {
 	m_leds[2].Setup(6);
 	m_leds[3].Setup(9);
 	m_leds[4].Setup(10);
+	
+	for (int n = 0; n < 5; n++) 
+		m_leds[n].Off();
 }
 
 void ModuleRainbow::OnEnquire(Stream* stream) {

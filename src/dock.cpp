@@ -21,7 +21,7 @@ void Dock::handleSet(char** params, Stream* stream) {
 
 	int pcount = convertParams(params, intParams);
 	if (pcount > 1) {
-		Module* m = m_channels[intParams[0]];
+		Module* m = m_channels[intParams[0] - 1];
 		if (m) {
 			m->Set(intParams + 1, pcount - 1);
 		}

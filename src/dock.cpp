@@ -1,12 +1,10 @@
 #include "dock.h"
 
-#include "handlecommand.h"
-
 bool isDelim(char c) {
 	return c == ',' || c == ' ';
 }
 
-Dock::Dock() : m_bufferPos(0) {
+Dock::Dock() : m_bufferPos(0), m_fpsTimer(1000), m_fpsCounter(0), m_fps(0) {
 	memset(m_channels, 0, sizeof(m_channels));
 }
 
@@ -23,7 +21,7 @@ void Dock::handleSet(char** params, Stream* stream) {
 
 	int pcount = convertParams(params, intParams);
 	if (pcount > 1) {
-		Module* m = m_channels[intParams[0]];
+		Module* m = m_channels[intParams[0] - 1];
 		if (m) {
 			m->Set(intParams + 1, pcount - 1);
 		}
@@ -78,7 +76,14 @@ void Dock::handleVersion(Stream* stream) {
 
 void Dock::handleDebug(Stream* stream) {
 	stream->print("# SRAM: 1337 bytes\r\n");
-	stream->print("# Loop: 0ms (0us) 0fps\r\n");
+	long us = 1000000 / m_fps;
+	stream->print("# Loop: ");
+	stream->print(us/1000);
+	stream->print("ms (");
+	stream->print(us);
+	stream->print("0us) ");
+	stream->print(m_fps);
+	stream->print("fps\r\n");
 	stream->print("# Channels:\r\n");
 	for (size_t n = 0; n < NUM_MODULES; n++) {
 		stream->print("# - ");
@@ -113,6 +118,13 @@ void Dock::AddModule(Module* mod) {
 }
 
 void Dock::ProcessInput(Stream* stream) {
+	m_fpsCounter++;
+	if (m_fpsTimer.hasTimedOut()) {
+		m_fps = m_fpsCounter;
+		m_fpsCounter = 0;
+		m_fpsTimer = TimeOut(1000);
+	}
+
 	int avail = stream->available();
 	for (int n = 0; n < avail; n++) {
 		int c = stream->read();

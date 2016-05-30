@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "module.h"
+#include "timeout.h"
 
 class Dock {
   private:
@@ -13,6 +14,10 @@ class Dock {
 	size_t m_bufferPos = 0;
 	char* m_tokenPtrs[32];
 	Module* m_channels[NUM_MODULES];
+
+	TimeOut m_fpsTimer;
+	long m_fpsCounter;
+	long m_fps;
 
 	void handleBuffer(Stream* stream);
 	void parseBuffer();

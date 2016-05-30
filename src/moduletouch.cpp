@@ -25,7 +25,7 @@ void ModuleTouch::Update(Stream* stream) {
 	bool send = false;
 
 	for (int n = 0; n < 4; n++) {
-		bool state = m_buttons[n].Pressed();
+		bool state = m_buttons[n].IsPressed();
 		if (m_prevStates[n] != state) {
 			m_prevStates[n] = state;
 			send = true;

@@ -1,6 +1,6 @@
 #include "led.h"
 
-void LED::Setup(uint8_t pin, bool activeHigh = true) {
+void LED::Setup(uint8_t pin, bool activeHigh) {
 	pinMode(pin, OUTPUT);
 	m_activeHigh = activeHigh;
 	m_pin = pin;

@@ -61,4 +61,4 @@ add_executable(arduino_flotilla_dummy
     src/modulerainbow.cpp
     src/modulerainbow.h
     src/dock.cpp 
-    src/dock.h)
+    src/dock.h src/led.cpp)

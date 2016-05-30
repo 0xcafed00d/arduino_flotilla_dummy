@@ -26,13 +26,11 @@ void setup() {
 	dock.AddModule(&modRainbow);
 }
 
-bool state = false;
-
 void loop() {
-	state = !state;
-	led1.Set(state);
+	led1.Toggle();
 
 	dock.Update(&Serial);
 	dock.ProcessInput(&Serial);
+	Serial.flush();
 	delay(100);
 }

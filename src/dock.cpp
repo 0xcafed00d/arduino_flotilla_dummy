@@ -78,7 +78,7 @@ void Dock::handleDebug(Stream* stream) {
 	stream->print("# SRAM: 1337 bytes\r\n");
 	long us = 1000000 / m_fps;
 	stream->print("# Loop: ");
-	stream->print(us/1000);
+	stream->print(us / 1000);
 	stream->print("ms (");
 	stream->print(us);
 	stream->print("0us) ");
@@ -125,9 +125,11 @@ void Dock::ProcessInput(Stream* stream) {
 		m_fpsTimer = TimeOut(1000);
 	}
 
-	int avail = stream->available();
-	for (int n = 0; n < avail; n++) {
+	while (true) {
 		int c = stream->read();
+		if (c == -1)
+			break;
+
 		switch (c) {
 			case '\r':
 				handleBuffer(stream);
